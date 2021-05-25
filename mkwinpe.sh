@@ -8,12 +8,18 @@
 
 
 do_checkreq() {
+	# check if executed as root
+	if [[ $EUID -ne 0 ]]; then
+		echo "[*E*]   This script must be run as root!"
+		exit 1
+	fi
+
 	# check some requirements:
 	for BIN in 7z mkwinpeimg; do
 		WHICH=$(which $BIN)
 		[ -z "$WHICH" ] && echo "[*E*]   Required program not found: $BIN" && ERR=$(($ERR + 1))
 	done
-	[ $ERR -gt 0 ] && exit 1
+	[ $ERR -gt 0 ] && exit 2
 }
 
 
