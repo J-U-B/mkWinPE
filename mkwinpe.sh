@@ -58,7 +58,7 @@ process_ISO(){
 					;;
 				o)
 					echo "[*I*]   Overwriting content of $TGT_DIR"
-					SZ_OPTS='-ao'
+					SZ_OPTS='-aoa'
 					;;
 				b)
 					TS=$(date +"%Y-%m-%d_%H%M%S")
@@ -82,6 +82,7 @@ process_ISO(){
 		if [ "$ANS" != "s" ]; then
 			echo "[*D*]   Extracting ISO image..."
 			7z x ${SZ_OPTS} -o${TGT_DIR} $ISO_IMAGE
+			opsi-setup --set-rights ${TGT_DIR}
 		fi
 	else
 		echo "[*I*]   Skipping ISO image"
@@ -154,7 +155,7 @@ process_WinPE(){
 
 	[ -d winpe-overlay ] && rm -rf winpe-overlay
 
-	opsi-setup --set-rights installfiles
+	opsi-setup --set-rights ${PE_DIR}
 }
 
 
